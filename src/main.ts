@@ -1,3 +1,5 @@
+import * as cookieParser from 'cookie-parser';
+
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import {
   ResponseFormat,
@@ -32,6 +34,9 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  // Cookie
+  app.use(cookieParser());
 
   // Prefix
   app.setGlobalPrefix('api');

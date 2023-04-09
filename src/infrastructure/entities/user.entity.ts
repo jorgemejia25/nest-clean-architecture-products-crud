@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -9,15 +10,13 @@ import {
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: number;
 
-  @Column()
-  name: string;
+  @Index({ unique: true })
+  @Column('varchar', { unique: true })
+  username: string;
 
-  @Column()
-  email: string;
-
-  @Column()
+  @Column('text')
   password: string;
 
   @CreateDateColumn({ name: 'createdate' })
@@ -26,11 +25,9 @@ export class User {
   @UpdateDateColumn({ name: 'updateddate' })
   updateddate: Date;
 
-  @Column({ name: 'isactive' })
-  isactive: boolean;
+  @Column({ nullable: true })
+  last_login?: Date;
 
-  @Column({
-    nullable: true,
-  })
-  last_login: Date;
+  @Column('varchar', { nullable: true })
+  hach_refresh_token: string;
 }
