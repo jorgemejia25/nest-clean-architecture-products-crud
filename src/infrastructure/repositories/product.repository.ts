@@ -4,6 +4,7 @@ import { ProductM } from 'src/domain/model/product';
 import { ProductRepository } from 'src/domain/repositories/productRepository.interface';
 import { Product } from '../entities/product.entity';
 import { Repository } from 'typeorm';
+import { Pagination } from 'src/domain/model/pagination';
 
 @Injectable()
 export class DatabaseProductRepository implements ProductRepository {
@@ -16,8 +17,22 @@ export class DatabaseProductRepository implements ProductRepository {
     return this.productRepository.save(todo);
   }
 
-  findAll(): Promise<ProductM[]> {
-    return this.productRepository.find();
+  async findAll(page: number, limit: number): Promise<Pagination<ProductM>> {
+    const products = await this.productRepository.find({
+      skip: page,
+      take: limit,
+    });
+
+    const total = await this.productRepository.count();
+    const pages = Math.ceil(total / limit);
+
+    return {
+      page,
+      limit,
+      pages,
+      total,
+      data: products,
+    };
   }
 
   findById(id: string): Promise<ProductM> {

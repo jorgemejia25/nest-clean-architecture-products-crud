@@ -9,14 +9,19 @@ import {
 import { plainToClass } from 'class-transformer';
 
 class EnvironmentVariables {
-  //   @IsString()
-  //   JWT_SECRET: string;
-  //   @IsString()
-  //   JWT_EXPIRATION_TIME: string;
-  //   @IsString()
-  //   JWT_REFRESH_TOKEN_SECRET: string;
-  //   @IsString()
-  //   JWT_REFRESH_TOKEN_EXPIRATION_TIME: string;
+  @IsString()
+  AUTH_USER: string;
+  @IsString()
+  AUTH_PASSWORD: string;
+
+  @IsString()
+  JWT_SECRET: string;
+  @IsString()
+  JWT_EXPIRATION_TIME: string;
+  @IsString()
+  JWT_REFRESH_TOKEN_SECRET: string;
+  @IsString()
+  JWT_REFRESH_TOKEN_EXPIRATION_TIME: string;
 
   @IsString()
   DB_HOST: string;

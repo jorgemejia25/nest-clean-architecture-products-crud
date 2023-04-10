@@ -1,6 +1,7 @@
 import { DatabaseProductRepository } from 'src/infrastructure/repositories/product.repository';
 import { ILogger } from '../../domain/logger/logger.interface';
 import { Injectable } from '@nestjs/common';
+import { Pagination } from 'src/domain/model/pagination';
 import { ProductM } from '../../domain/model/product';
 
 @Injectable()
@@ -18,8 +19,11 @@ export class ProductUseCases {
     return productCreated;
   }
 
-  async getProducts(): Promise<ProductM[]> {
-    const products = await this.productRepository.findAll();
+  async getProducts(
+    page: number,
+    limit: number,
+  ): Promise<Pagination<ProductM>> {
+    const products = await this.productRepository.findAll(page, limit);
 
     this.logger.log('getProductsUseCases execute', 'Product found');
 
